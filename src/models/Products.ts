@@ -1,36 +1,45 @@
-import express, { Request, Response } from 'express';
-import { Product,Products } from '../handlers/Products';
+import con from "../DB"
 
-const product= new Products;
-
-const index = async (_req: Request, res: Response) => {
-    const result = await product.index()
-    res.json(result)
-  }
-
-  const show = async (req: Request, res: Response) => {
-    try {
-      const id = Number(req.params.id);
-      const result = await product.show(id);
-      res.json(result);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  };
-
-  const create = async (req: Request, res: Response) => {
-    try {
-      const { name, price } = req.body;
-      const p: Product = { name, price };
-      const result = await product.create(p);
-      res.json(result);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  };
-
-  export const product_route= (app: express.Application)=>{
-    app.get('/Products', index)
-    app.get('/Products/:id', show)
-    app.post('/Products', create)
+export type Product={
+    id?: number;
+    name: string;
+    price: number;
 }
+
+export class Products{
+    async index(): Promise<Product[]>{
+        try{
+        const conn= await con.connect()
+        const sql= 'SELECT * FROM Products'
+        const result= await conn.query(sql)
+        conn.release()
+        return result.rows
+        }catch(err){
+        throw new Error(`error: ${err}`)
+        }
+    }
+    
+    async show(id: number): Promise<Product> {
+        try {
+          const conn = await con.connect();
+          const sql = `SELECT * FROM Products WHERE id=($1)`;
+          const result = await conn.query(sql, [id]);
+          conn.release();
+          return result.rows[0];
+        } catch (error) {
+          throw new Error(`Failed to get the product with the following error: ${error}`);
+        }
+      }
+
+      async create(p: Product): Promise<Product> {
+        try {
+          const conn = await con.connect();
+          const sql = 'INSERT INTO Products (name, price) VALUES($1, $2) RETURNING *';
+          const result = await conn.query(sql, [ p.name, p.price ]);
+          conn.release();
+          return result.rows[0];
+        } catch (error) {
+          throw new Error(`Failed to add the product with the following error: ${error}`);
+        }
+      }
+    }

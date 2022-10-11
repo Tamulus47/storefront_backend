@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
-import { product_route } from './models/Products' 
+import { product_route } from './handlers/Products'
+import { user_route } from './handlers/Users'
 
 const app: express.Application = express()
 const address: string = "127.0.0.1:8080"
@@ -15,3 +16,4 @@ app.listen(8080, function () {
 })
 
 product_route(app)
+user_route(app)

@@ -1,17 +1,17 @@
 import express, { Request, Response } from 'express';
-import { Product,Products } from '../models/Products';
+import { User,Users} from '../models/Users'
 
-const product= new Products;
+const user= new Users;
 
 const index = async (_req: Request, res: Response) => {
-    const result = await product.index()
+    const result = await user.index()
     res.json(result)
   }
 
   const show = async (req: Request, res: Response) => {
     try {
       const id = Number(req.params.id);
-      const result = await product.show(id);
+      const result = await user.show(id);
       res.json(result);
     } catch (error) {
       res.status(500).json(error);
@@ -20,17 +20,17 @@ const index = async (_req: Request, res: Response) => {
 
   const create = async (req: Request, res: Response) => {
     try {
-      const { name, price } = req.body;
-      const p: Product = { name, price };
-      const result = await product.create(p);
+      const { firstName, lastName, password } = req.body;
+      const u: User = { firstName, lastName, password };
+      const result = await user.create(u);
       res.json(result);
     } catch (error) {
       res.status(500).json(error);
     }
   };
 
-  export const product_route= (app: express.Application)=>{
-    app.get('/Products', index)
-    app.get('/Products/:id', show)
-    app.post('/Products', create)
+  export const user_route= (app: express.Application)=>{
+    app.get('/Users', index)
+    app.get('/Users/:id', show)
+    app.post('/Users', create)
 }
