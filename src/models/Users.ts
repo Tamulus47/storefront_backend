@@ -35,7 +35,7 @@ export class Users{
       async create(u: User): Promise<User> {
         try {
           const conn = await con.connect();
-          const sql = 'INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *';
+          const sql = 'INSERT INTO users ("firstName", "lastName", "password") VALUES($1, $2, $3) RETURNING *';
           const result = await conn.query(sql, [ u.firstName, u.lastName, u.password ]);
           conn.release();
           return result.rows[0];
