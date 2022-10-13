@@ -49,7 +49,7 @@ describe("test orders model", ()=>{
         expect(Product).toEqual(result);
     })
 
-    afterAll(async ()=>{
+    it("test add_products method",async()=>{
          const add= await ord.createop(Prod.Product_quantity, Prod.order_id, Prod.Product_id)
          expect({ Product_quantity: add.Product_quantity, Product_id: add.Product_id, order_id:add.order_id }).toEqual({ Product_quantity: Prod.Product_quantity, Product_id: Prod.Product_id, order_id: Prod.order_id })
     })
