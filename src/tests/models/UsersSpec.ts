@@ -1,4 +1,6 @@
 import { User,Users } from "../../models/Users";
+import { runp } from "./ProductsSpec"; 
+import { runo } from "./OrdersSpec";
 
 const user= new Users;
 
@@ -10,7 +12,10 @@ const UserTest:User={
 
 let result:User;
 
-describe("test users endpoint",()=>{
+export function runu(){
+
+describe("test users model",()=>{
+    
     beforeAll(async()=>{
         result = await user.create(UserTest);
     })
@@ -40,4 +45,6 @@ describe("test users endpoint",()=>{
         const User = await user.show(result.id as number);
         expect(User).toEqual(result);
     })
-})
+})}
+
+new Promise((resolve)=>{resolve(runu())}).then(()=>{runp()}).finally(()=>{runo()})
