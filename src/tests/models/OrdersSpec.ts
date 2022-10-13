@@ -54,8 +54,3 @@ describe("test orders model", ()=>{
          expect({ Product_quantity: add.Product_quantity, Product_id: add.Product_id, order_id:add.order_id }).toEqual({ Product_quantity: Prod.Product_quantity, Product_id: Prod.Product_id, order_id: Prod.order_id })
     })
 })}
-
-// async function run() {
-//     await runu().then(()=>{runp()}).then(()=>{runo()});
-// }
-// run();
