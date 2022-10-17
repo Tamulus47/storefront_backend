@@ -46,7 +46,7 @@ describe("test orders model", ()=>{
 
     it("test show method",async()=>{
         const Product = await ord.show(result.id as number);
-        expect(Product).toEqual(result);
+        expect({ id: Product[0].id, order_status:Product[0].order_status }).toEqual({ id: result.id, order_status: result.order_status });
     })
 
     it("test add_products method",async()=>{

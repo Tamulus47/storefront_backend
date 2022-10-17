@@ -26,13 +26,13 @@ export type addp={
       }
   }
   
-  async show(id: number): Promise<Order> {
+  async show(userid: number): Promise<Order[]> {
       try {
         const conn = await con.connect();
-        const sql = `SELECT * FROM orders WHERE id=($1)`;
-        const result = await conn.query(sql, [id]);
+        const sql = `SELECT id,order_status FROM orders WHERE user_id=($1)`;
+        const result = await conn.query(sql, [userid]);
         conn.release();
-        return result.rows[0];
+        return result.rows;
       } catch (error) {
         throw new Error(`Failed to get the order with the following error: ${error}`);
       }
@@ -51,13 +51,14 @@ export type addp={
     }
 
     async createop(Product_quantity: number, order_id: number, Product_id: number): Promise<addp> {
-        try {
-          const conn = await con.connect();
-          const sql = 'INSERT INTO orders_products ("Product_quantity", "Product_id", order_id) VALUES($1, $2, $3) RETURNING *';
-          const result = await conn.query(sql, [ Product_quantity, Product_id, order_id ]);
-          conn.release();
-          return result.rows[0]
-        } catch (error) {
-          throw new Error(`Failed to get the order with the following error: ${error}`);
-        }
-}}
+      try {
+        const conn = await con.connect();
+        const sql = 'INSERT INTO orders_products ("Product_quantity", "Product_id", order_id) VALUES($1, $2, $3) RETURNING *';
+        const result = await conn.query(sql, [ Product_quantity, Product_id, order_id ]);
+        conn.release();
+        return result.rows[0]
+      } catch (error) {
+        throw new Error(`Failed to get the order with the following error: ${error}`);
+      }
+    }
+}

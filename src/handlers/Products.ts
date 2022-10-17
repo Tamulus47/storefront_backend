@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Product,Products } from '../models/Products';
+import { verify_auth } from '../helpers/JWT-helper';
 
 const product= new Products;
 
@@ -20,6 +21,7 @@ const index = async (_req: Request, res: Response) => {
 
   const create = async (req: Request, res: Response) => {
     try {
+      verify_auth(req)
       const { name, price } = req.body;
       const p: Product = { name, price };
       const result = await product.create(p);

@@ -8,7 +8,7 @@ CREATE TABLE Users(
     "id" SERIAL PRIMARY KEY,
     "firstName" VARCHAR(255) NOT NULL,
     "lastName" VARCHAR(255) NOT NULL,
-    password VARCHAR(20) NOT NULL
+    password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Orders(

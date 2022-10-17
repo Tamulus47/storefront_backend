@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
-import { Order, Orders} from '../models/Orders'
+import { Order, Orders} from '../models/Orders';
+import { verify_auth } from '../helpers/JWT-helper';
 
 const order = new Orders;
 
@@ -14,8 +15,9 @@ const index = async (req: Request, res: Response) => {
 
 const show = async (req: Request, res: Response) => {
   try {
-    const id: number= parseInt(req.params.id);
-    const result= await order.show(id)
+    const user_id: number= parseInt(req.params.id);
+    verify_auth(req);
+    const result= await order.show(user_id)
     res.json(result);
   } catch (error) {
     res.status(500).json(error);

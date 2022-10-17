@@ -33,7 +33,7 @@ describe("test users model",()=>{
     })
 
     it("test create method",()=>{
-        expect({ firstname: result.firstName, lastname: result.lastName, password: result.password }).toEqual({ firstname: UserTest.firstName, lastname: UserTest.lastName, password: UserTest.password })
+        expect({ firstname: result.firstName, lastname: result.lastName }).toEqual({ firstname: UserTest.firstName, lastname: UserTest.lastName })
     })
 
     it("test index method",async()=>{
@@ -42,8 +42,8 @@ describe("test users model",()=>{
     })
 
     it("test show method",async()=>{
-        const User = await user.show(result.id as number);
-        expect(User).toEqual(result);
+        const User = await user.test_show(result.id as number);
+        expect(User).toEqual(result)
     })
 })}
 
