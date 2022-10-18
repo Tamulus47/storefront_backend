@@ -3,7 +3,7 @@ import { Request } from 'express';
 
 const SECRET = process.env.SECRET as string;
 
-export function gen_token(id: number) {
+export function gen_token_data(id: number) {
     return sign({ user: { id } }, SECRET)
 }
 
@@ -12,7 +12,7 @@ export function verify_auth(req: Request, id?: number){
     if(auth_token){
         const JWT= auth_token.replace('Bearer ','')
         const JWTP = verify(JWT as string, SECRET) as JwtPayload;
-        if (id && JWTP.user.id != id) {
+        if (id !== undefined && JWTP.user.id != id) {
             throw new Error("can't show this data for this user");
         }
     }else{

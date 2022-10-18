@@ -15,7 +15,7 @@ const Prod:addp={
 
 let result:Order;
 
-export function runo(){
+export function runom(){
 
 describe("test orders model", ()=>{
 
@@ -44,13 +44,14 @@ describe("test orders model", ()=>{
         expect(products).toContain(result)
     })
 
-    it("test show method",async()=>{
-        const Product = await ord.show(result.id as number);
-        expect({ id: Product[0].id, order_status:Product[0].order_status }).toEqual({ id: result.id, order_status: result.order_status });
-    })
-
     it("test add_products method",async()=>{
          const add= await ord.createop(Prod.Product_quantity, Prod.order_id, Prod.Product_id)
          expect({ Product_quantity: add.Product_quantity, Product_id: add.Product_id, order_id:add.order_id }).toEqual({ Product_quantity: Prod.Product_quantity, Product_id: Prod.Product_id, order_id: Prod.order_id })
     })
-})}
+
+    it("test show method",async()=>{
+        const Product = await ord.show(result.user_id as number);
+        expect({ id: Product[0].id, order_status:Product[0].order_status }).toEqual({ id: result.id, order_status: result.order_status });
+    })
+})
+}

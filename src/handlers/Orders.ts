@@ -32,7 +32,7 @@ const createo = async (req: Request, res: Response) => {
     res.json(result);
   } catch (error) {
     res.status(500).json(error);
-  }  
+  }
 }
 
 const createop = async (req: Request, res: Response) => {

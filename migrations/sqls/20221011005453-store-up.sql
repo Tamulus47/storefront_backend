@@ -25,4 +25,4 @@ CREATE TABLE Orders_Products(
     "Product_id" INTEGER,
     FOREIGN KEY ("order_id") REFERENCES Orders(id),
     FOREIGN KEY ("Product_id") REFERENCES Products(id)
-    );
+);

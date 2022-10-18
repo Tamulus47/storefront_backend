@@ -1,6 +1,4 @@
 import { User,Users } from "../../models/Users";
-import { runp } from "./ProductsSpec"; 
-import { runo } from "./OrdersSpec";
 
 const user= new Users;
 
@@ -12,7 +10,7 @@ const UserTest:User={
 
 let result:User;
 
-export function runu(){
+export function runum(){
 
 describe("test users model",()=>{
     
@@ -42,9 +40,8 @@ describe("test users model",()=>{
     })
 
     it("test show method",async()=>{
-        const User = await user.test_show(result.id as number);
+        const User = await user.show(result.id as number,UserTest.password);
         expect(User).toEqual(result)
     })
-})}
-
-new Promise((resolve)=>{resolve(runu())}).then(()=>{runp()}).finally(()=>{runo()})
+})
+}
