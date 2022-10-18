@@ -1,0 +1,19 @@
+{
+    "dev": {
+      "host": "Database host",
+      "user": "Database user",
+      "password" : "Database password",
+      "database": "Database name",
+      "driver": "pg",
+      "port" :"5432"
+    },
+    "test":{
+      "host": "Database host",
+      "user": "Database user",
+      "password" : "Database password",
+      "database": "Testing database name",
+      "driver": "pg",
+      "port" :"Database port"
+    }
+  }
+  

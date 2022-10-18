@@ -9,7 +9,7 @@ const ProductTest:Product={
 
 let result:Product;
 
-export function runp(){
+export function runpm(){
 
 describe("test products model",()=>{
     
@@ -42,4 +42,5 @@ describe("test products model",()=>{
         const Product = await product.show(result.id as number);
         expect(Product).toEqual(result);
     })
-})}
+})
+}
