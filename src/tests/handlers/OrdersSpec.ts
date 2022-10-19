@@ -35,7 +35,7 @@ describe('test orders endpoints', () => {
     });
     
     it('test show endpoint', async () => {
-        await request.get(`/orders/${test_order.user_id}`).set('Authorization', token).expect(200);
+        await request.get(`/orders/${test_order.user_id}`).send({token}).expect(200);
     });
 
     it('test createop endpoint', async () => {

@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import { app } from '../../server';
-import { JwtPayload, verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { User } from '../../models/Users'; 
 
 const request = supertest(app);
@@ -22,18 +22,18 @@ describe('test users endpoints', () => {
     it('test create endpoint', async () => {
       await request.post('/Users').send(user).expect(200).then((res) => {
           token = res.text.replace(/['"]+/g, '');
-          const SECRET = process.env.SECRET as string;
-          const JWT = verify(token, SECRET) as JwtPayload;
-          id = JWT.user.id
+          const JWT = jwt.verify(token, process.env.SECRET as string) as jwt.JwtPayload;
+          id = JWT.user
         })
     });
   
     it('test index endpoint', async () => {
-      await request.get('/Users').set('Authorization', token).expect(200);
+      await request.get('/Users').send({token}).expect(200);
     });
 
     it('test show endpoint', async () => {
-      await request.get(`/Users/${id}`).send(user).set('Authorization', token).expect(200);
+      await request.get(`/Users/${id}`).send(user).send({token}).expect(200);
+
     });
   })
 }

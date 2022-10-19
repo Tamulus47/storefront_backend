@@ -17,7 +17,7 @@ export function runph(){
 describe('test products endpoints', () => {
 
     it('test create endpoint', async () => {
-      await request.post('/Products').set('Authorization', token).send(test_product).expect(200).then((res) => {
+      await request.post('/Products').send({token}).send(test_product).expect(200).then((res) => {
         product = res.body;
       })
     });
