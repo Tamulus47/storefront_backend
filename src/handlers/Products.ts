@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Product,Products } from '../models/Products';
-import { verify_auth } from '../helpers/JWT-helper';
+import jwt from 'jsonwebtoken'
 
 const product= new Products;
 
@@ -21,7 +21,7 @@ const index = async (_req: Request, res: Response) => {
 
   const create = async (req: Request, res: Response) => {
     try {
-      verify_auth(req)
+      jwt.verify(req.body.token, process.env.SECRET as string);
       const { name, price } = req.body;
       const p: Product = { name, price };
       const result = await product.create(p);

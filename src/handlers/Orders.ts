@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Order, Orders} from '../models/Orders';
-import { verify_auth } from '../helpers/JWT-helper';
+import jwt from 'jsonwebtoken'
 
 const order = new Orders;
 
@@ -16,7 +16,7 @@ const index = async (req: Request, res: Response) => {
 const show = async (req: Request, res: Response) => {
   try {
     const user_id: number= parseInt(req.params.id);
-    verify_auth(req);
+    jwt.verify(req.body.token, process.env.SECRET as string);
     const result= await order.show(user_id)
     res.json(result);
   } catch (error) {

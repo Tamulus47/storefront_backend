@@ -1,12 +1,12 @@
 import express, { Request, Response } from 'express';
 import { User,Users} from '../models/Users'
-import { verify_auth, gen_token_data } from "../helpers/JWT-helper";
+import jwt from 'jsonwebtoken'
 
 const user= new Users;
 
 const index = async (req: Request, res: Response) => {
   try {
-    verify_auth(req)
+    jwt.verify(req.body.token, process.env.SECRET as string);
     const result = await user.index()
     res.json(result)
   } catch (error) {
@@ -16,7 +16,7 @@ const index = async (req: Request, res: Response) => {
   const show = async (req: Request, res: Response) => {
     try {
       const id = Number(req.params.id);
-      verify_auth(req, id);
+      jwt.verify(req.body.token, process.env.SECRET as string);
       const { password } = req.body;
       const result = await user.show(id,password);
       res.json(result);
@@ -30,8 +30,8 @@ const index = async (req: Request, res: Response) => {
       const { firstName, lastName, password } = req.body;
       const u: User = { firstName, lastName, password };
       const result = await user.create(u);
-      const JWT = gen_token_data(Number(result.id));
-      res.json(JWT);
+      const token = jwt.sign({ user:  result.id }, process.env.SECRET as string)
+      res.json(token);
     } catch (error) {
       res.status(500).json(error);
     }
