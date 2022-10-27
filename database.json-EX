@@ -3,7 +3,7 @@
       "host": "Database host",
       "user": "Database user",
       "password" : "Database password",
-      "database": "Database name",
+      "database": "store",
       "driver": "pg",
       "port" :"5432"
     },
@@ -11,9 +11,9 @@
       "host": "Database host",
       "user": "Database user",
       "password" : "Database password",
-      "database": "Testing database name",
+      "database": "store_test",
       "driver": "pg",
-      "port" :"Database port"
+      "port" :"5432"
     }
   }
   
