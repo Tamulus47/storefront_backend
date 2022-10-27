@@ -15,11 +15,16 @@ const index = async (req: Request, res: Response) => {
 
   const show = async (req: Request, res: Response) => {
     try {
-      const id = Number(req.params.id);
-      jwt.verify(req.body.token, process.env.SECRET as string);
-      const { password } = req.body;
-      const result = await user.show(id,password);
-      res.json(result);
+      jwt.verify(req.body.token, process.env.SECRET as string)
+      const id = Number(req.params.id)
+      const password = req.body.password
+      const tokenpl= jwt.verify(req.body.token, process.env.SECRET as string) as jwt.JwtPayload
+      if(tokenpl.user === id){
+        const result = await user.show(id,password);
+        res.json(result);
+      }else{
+        throw new Error("token id doesn't match")
+      }
     } catch (error) {
       res.status(500).json(error);
     }
