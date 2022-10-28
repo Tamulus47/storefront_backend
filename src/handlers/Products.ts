@@ -4,13 +4,19 @@ import jwt from 'jsonwebtoken'
 
 const product= new Products;
 
-const index = async (_req: Request, res: Response) => {
+const index = async (req: Request, res: Response) => {
+  try {
+    jwt.verify(req.body.token, process.env.SECRET as string);
     const result = await product.index()
     res.json(result)
+  } catch (error) {
+    res.status(500).json(error);
+  }
   }
 
   const show = async (req: Request, res: Response) => {
     try {
+      jwt.verify(req.body.token, process.env.SECRET as string);
       const id = Number(req.params.id);
       const result = await product.show(id);
       res.json(result);
